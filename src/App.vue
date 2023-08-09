@@ -1,20 +1,39 @@
 <script setup>
-  import Materialize from 'materialize-css'
+import Materialize from "materialize-css";
 </script>
 
 <template>
-  <Navbar/>
-  <RouterView />
+  <!-- <Topbar /> -->
+  <div id="main-app">
+    <Sidebar />
+    <div id="content">
+      <RouterView />
+    </div>
+  </div>
 </template>
 
 <script>
+import Sidebar from "./Components/Sidebar.vue";
+import Topbar from "./Components/Topbar.vue";
 
-import Navbar from './components/Navbar.vue'
-
-  export default {
-    name: 'App',
-    components: {
-      Navbar
-    }
-  }
+export default {
+  name: "App",
+  components: {
+    Sidebar,
+    Topbar,
+  },
+  methods: {
+    async mounted() {
+      Materialize.AutoInit();
+    },
+  },
+};
 </script>
+
+<style global>
+#main-app {
+  display: flex;
+  flex-direction: row;
+}
+</style>
+

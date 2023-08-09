@@ -2,26 +2,14 @@
   <div class="container">
     <div class="form">
       <div class="container">
-        <h5>Adicionar clube</h5>
-
-        <Alerta
-          v-if="erros.name != undefined"
-          :mensagem="erros.name[0]"
-          :tipo="'erro'"
-        />
-
-        <Alerta
-          v-if="sucesso"
-          :tipo="'sucesso'"
-          :mensagem="'Adicionado com sucesso!'"
-        />
-
+        <h5>Adicionar usuário</h5>
         <Input
           :id="'nome'"
           :type="'text'"
           v-model="nome"
-          :label="'Nome do clube'"
+          :label="'Nome do usuário'"
         />
+        <Input :id="'email'" :type="'text'" v-model="email" :label="'Email'" />
         <div class="box-button">
           <button @click="submit" class="waves-effect waves-light btn submit">
             <i class="material-icons right">send</i>Salvar
@@ -34,10 +22,9 @@
 
 <script>
 import Input from "../components/Input.vue";
-import Alerta from "../components/Alerta.vue";
 
 export default {
-  name: "AdicionarClube",
+  name: "AddMember",
 
   components: {
     Input,
@@ -46,25 +33,12 @@ export default {
   data() {
     return {
       nome: "",
+      email: "",
       erros: [],
       sucesso: false,
     };
   },
   methods: {
-    async submit() {
-      this.api
-        .post("api/club", {
-          name: this.nome,
-        })
-        .then((response) => {
-          this.sucesso = true;
-          this.erros = [];
-        })
-        .catch((error) => {
-          this.sucesso = false;
-          this.erros = error.response.data.errors;
-        });
-    },
   },
 };
 </script>

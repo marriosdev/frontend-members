@@ -15,28 +15,28 @@ app.mount('#app')
 
 app.config.globalProperties.api = api
 
-api.get('api/me')
-.then(response => {
-    localStorage.setItem('isLogged', true)
-}).catch(error => {
-    localStorage.setItem('isLogged', false)
-    router.push('login')
-})
+// api.get('api/me')
+// .then(response => {
+//     localStorage.setItem('isLogged', true)
+// }).catch(error => {
+//     localStorage.setItem('isLogged', false)
+//     router.push('login')
+// })
 
-router.beforeEach((to, from, next) => {
-    let logado = localStorage.getItem('isLogged')
+// router.beforeEach((to, from, next) => {
+//     let logado = localStorage.getItem('isLogged')
 
-    if (logado == 'false' || logado == undefined) {
-        if (to.name != "login" && to.name != "register") {
-            api.get('api/me')
-            .then(response => {
-                localStorage.setItem('isLogged', true)
-            }).catch(error => {
-                localStorage.setItem('isLogged', false)
-                router.push('login')
-            })
-        }
-    }
-    next()
-    return
-})
+//     if (logado == 'false' || logado == undefined) {
+//         if (to.name != "login" && to.name != "register") {
+//             api.get('api/me')
+//             .then(response => {
+//                 localStorage.setItem('isLogged', true)
+//             }).catch(error => {
+//                 localStorage.setItem('isLogged', false)
+//                 router.push('login')
+//             })
+//         }
+//     }
+//     next()
+//     return
+// })
