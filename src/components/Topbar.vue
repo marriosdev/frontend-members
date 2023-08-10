@@ -15,7 +15,6 @@ export default {
 @import url("../assets/css/global.css");
 
 #topbar {
-    /* background-color: --topbar-sidebar-color !important; */
     height: 40px;
     background-color: #0056a7 !important;
 }

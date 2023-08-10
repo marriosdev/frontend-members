@@ -4,19 +4,19 @@
       <div id="header-sidebar">
         <h3>LOGO</h3>
       </div>
-      <ul v-for="btn in buttons" :key="btn.text">
+      <ul v-for="buttonSidebar in buttons" :key="buttonSidebar.text">
         <li>
-          <ButtonSidebar :text="btn.text" :icon="btn.icon" :link="btn.link" />
+          <ButtonSidebar :text="buttonSidebar.text" :icon="buttonSidebar.icon" :link="buttonSidebar.link" />
         </li>
       </ul>
     </div>
     <div id="footer-sidebar">
       <ul>
         <li>
-          <ButtonSidebar text="Configurações" icon="settings"/>  
+          <ButtonSidebar text="Configurações" icon="settings" link="/settings" />  
         </li>
         <li>
-          <ButtonSidebar text="Sair" icon="exit_to_app"/>  
+          <ButtonSidebar text="Sair" icon="exit_to_app" link="/logout"/>  
         </li>
       </ul>
     </div>
@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import ButtonSidebar from "./ButtonSidebar.vue";
+
+import ButtonSidebar from "../Components/ButtonSidebar.vue";
 
 export default {
   name: "Sidebar",
@@ -44,24 +45,28 @@ export default {
           icon: "people",
           link: "/members",
         },
+        {
+          text: "Comunidade",
+          icon: "people",
+          link: "/comunidade",
+        },
       ],
     };
   },
-  mounted() {},
+  mounted() {
+    
+  },
 };
 </script>
 
 <style scoped>
 
-@import url("../assets/css/global.css");
-
 #sidebar {
   justify-content: space-between;
   position: sticky;
-  width: 200px;
-  max-width: 200px;
+  min-width: 200px;
   min-height: 100vh !important;
-  background-color: #0056a7 !important;
+  background-color: var(--primary);
   top: 0;
   left: 0;
   z-index: 999;

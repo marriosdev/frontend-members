@@ -6,7 +6,7 @@ import api from './api'
 import 'materialize-css/dist/css/materialize.css'
 import 'material-design-icons/iconfont/material-icons.css'
 import 'materialize-css/dist/js/materialize.js'
-
+import './Assets/css/global.css'
 const app = createApp(App)
 
 app.use(router)
@@ -40,3 +40,5 @@ app.config.globalProperties.api = api
 //     next()
 //     return
 // })
+
+next()

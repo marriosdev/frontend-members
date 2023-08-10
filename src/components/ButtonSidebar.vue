@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="'{{link}}'" >
+  <router-link :to="link" >
     <a class="button-sidebar waves-effect waves-light btn">
       <i class="material-icons left">
         {{ icon }}
@@ -17,6 +17,10 @@ export default {
     link: String,
     disabled: Boolean,
   },
+  data() {
+    return {
+    }
+  }
 };
 </script>
 
