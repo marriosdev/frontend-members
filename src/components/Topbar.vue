@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav-fixed" id="topbar">
+  <nav id="topbar">
     <div >
     </div>
   </nav>
@@ -15,7 +15,11 @@ export default {
 @import url("../assets/css/global.css");
 
 #topbar {
+    background-color: var(--primary) !important;
     height: 40px;
-    background-color: #0056a7 !important;
+    margin-bottom: 40px;
+    position: sticky;
+    top:0;
+    left: 0;
 }
 </style>

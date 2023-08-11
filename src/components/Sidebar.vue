@@ -1,8 +1,13 @@
 <template>
-  <div id="sidebar" class="sidenav-fixed">
+  <div id="sidebar" v-if="isLogged =='true'" class="sidenav-fixed">
     <div>
       <div id="header-sidebar">
-        <h3>LOGO</h3>
+        <div>
+          <h3>LOGO</h3>
+        </div>
+        <div style="padding: 10px; display: flex; justify-content: start; width: 100%; margin-top: 10px; margin-bottom: 10px">
+          <CirculaIcon @click="logout" :icon="'exit_to_app'" />
+        </div>
       </div>
       <ul v-for="buttonSidebar in buttons" :key="buttonSidebar.text">
         <li>
@@ -12,12 +17,10 @@
     </div>
     <div id="footer-sidebar">
       <ul>
-        <li>
-          <ButtonSidebar text="Configurações" icon="settings" link="/settings" />  
-        </li>
-        <li>
-          <ButtonSidebar text="Sair" icon="exit_to_app" link="/logout"/>  
-        </li>
+        <p>
+          <!-- Desenvolvido por -->
+          <!-- <a href="https://edmariooliveira.vercel.app/" target="_blank">Edmario Oliveira</a> -->
+        </p>
       </ul>
     </div>
   </div>
@@ -26,14 +29,17 @@
 <script>
 
 import ButtonSidebar from "../Components/ButtonSidebar.vue";
+import CirculaIcon from "./CirculaIcon.vue";
 
 export default {
   name: "Sidebar",
   components: {
     ButtonSidebar,
+    CirculaIcon
   },
   data() {
     return {
+      isLogged: Boolean,
       buttons: [
         {
           text: "Inicio",
@@ -42,19 +48,32 @@ export default {
         },
         {
           text: "Membros",
-          icon: "people",
-          link: "/members",
+          icon: "group_add",
+          link: "/adicionarMembro",
         },
         {
           text: "Comunidade",
           icon: "people",
-          link: "/comunidade",
+          link: "/adicionarComunidade",
+        },
+        {
+          text: "ADMIN",
+          icon: "settings",
+          link: "/adicionarAdminComunidade",
         },
       ],
     };
   },
+  methods: {
+    async logout() {
+      localStorage.setItem("isLogged", false);
+      localStorage.removeItem("token");
+      this.$router.push("/login");
+      this.isLogged = false;
+    }
+  },    
   mounted() {
-    
+    this.isLogged = localStorage.getItem("isLogged");
   },
 };
 </script>
@@ -76,6 +95,7 @@ export default {
 
 #header-sidebar {
   display: flex;
+  flex-direction: column;;
   align-items: center;
   justify-content: center;
   height: 100px;
@@ -83,6 +103,7 @@ export default {
 }
 
 #footer-sidebar {
+  padding: 30px;
   justify-self: end;
   align-self: stretch;
   display: flex;

@@ -1,24 +1,26 @@
 <script setup>
 import Materialize from "materialize-css";
 </script>
-
 <template>
-  <!-- <Topbar /> -->
   <div id="main-app">
     <Sidebar />
-      <RouterView />
+    <RouterView />
   </div>
 </template>
 
 <script>
+
 import Sidebar from "./Components/Sidebar.vue";
-// import Topbar from "./Components/Topbar.vue";
 
 export default {
   name: "App",
+  data() {
+    return {
+      isLogged: false,
+    };
+  },
   components: {
     Sidebar,
-    // Topbar,
   },
   methods: {
     async mounted() {

@@ -4,7 +4,6 @@
       <div class="header">
         <h5>Login</h5>
       </div>
-      <Alerta :tipo="'erro'" :mensagem="mensagemErro" v-if="!sucesso" />
       <Input :id="'email'" :type="'text'" v-model="email" :label="'E-mail'" />
       <Input
         :id="'password'"
@@ -12,23 +11,21 @@
         v-model="senha"
         :label="'Senha'"
       />
-      <a class="waves-effect waves-light btn-small" @click="entrar"><i class="material-icons right">send</i>Entrar</a>
-      <div>
-        <router-link :to="'register'">Criar uma conta</router-link>
-      </div>
+      <Button @click="login" :text="'Entrar'" :icon="'input'" />
     </div>
   </div>
 </template>
 
 <script>
-import Input from "../components/Input.vue";
-import Alerta from "../components/Alerta.vue";
+import Input from "../Components/Input.vue";
+import Button from "../Components/Button.vue";
+
 export default {
   name: "Login",
 
   components: {
     Input,
-    Alerta,
+    Button,
   },
 
   data() {
@@ -43,9 +40,9 @@ export default {
     M.AutoInit();
   },
   methods: {
-    async entrar() {
+    async login() {
       this.api
-        .post("api/auth/login", {
+        .post("login", {
           email: this.email,
           password: this.senha,
         })
