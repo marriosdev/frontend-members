@@ -103,34 +103,33 @@ export default {
   data() {
     return {
       communities: Array,
-      name: "",
-      lastname: "",
-      description: "",
-      phone: "",
-      email: "",
-      address: "",
-      community_id: "",
-      city: "",
-      state: "",
-      country: "",
-      zipcode: "",
-      username: "",
-      password: "",
+      name: String,
+      lastname: String,
+      description: String,
+      phone: String,
+      email: String,
+      address: String,
+      community_id: String,
+      city: String,
+      state: String,
+      country: String,
+      zipcode: String,
+      username: String,
+      password: String,
       errors: [],
       success: false,
     };
   },
   mounted() {
-    this.getCommunities()
+    this.getCommunities();
   },
   methods: {
-
     async getCommunities() {
-     this.api.get("/communities")
-     .then((response) => {
-      console.log(response.data)
-      this.communities = response.data
-    })},
+      this.api.get("/communities").then((response) => {
+        console.log(response.data);
+        this.communities = response.data;
+      });
+    },
 
     async submit() {
       const memberData = {
@@ -147,7 +146,7 @@ export default {
         username: this.username,
         password: this.password,
       };
-      api.post("/members", memberData);
+      api.post("/user", memberData);
       console.log(memberData);
     },
   },

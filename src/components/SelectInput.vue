@@ -1,7 +1,7 @@
 <template>
   <div class="input-field col s12">
-    {{ communities }}
-    <select :value="modelValue ? modelValue : value" @change="updateValue" :id="id">
+    <select class="" :value="modelValue ? modelValue : value" @change="updateValue" :id="id">
+      <option value="">Selecione</option>
       <option
         v-for="community in communities"
         :key="community.id"
@@ -20,8 +20,8 @@ export default {
   name: "SelectInput",
   props: {
     communities: Array,
-    id: "",
-    label: "",
+    id: Number,
+    label: String,
     value: null,
   },
 
@@ -30,7 +30,7 @@ export default {
       modelValue: null,
     };
   },
-  mounted() {
+  updated() {
     M.AutoInit();
   },
   methods: {
