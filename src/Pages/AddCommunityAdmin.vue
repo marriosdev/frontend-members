@@ -102,21 +102,9 @@ export default {
   },
   data() {
     return {
-      communities: [
-        {
-          name: "teste",
-          value: "1",
-        },
-        {
-          name: "teste",
-          value: "2",
-        },
-        {
-          name: "teste",
-          value: "3",
-        },
-      ],
+      communities: Array,
       name: "",
+      lastname: "",
       description: "",
       phone: "",
       email: "",
@@ -132,9 +120,18 @@ export default {
       success: false,
     };
   },
-  mounted() {},
-
+  mounted() {
+    this.getCommunities()
+  },
   methods: {
+
+    async getCommunities() {
+     this.api.get("/communities")
+     .then((response) => {
+      console.log(response.data)
+      this.communities = response.data
+    })},
+
     async submit() {
       const memberData = {
         community_id: this.community_id,

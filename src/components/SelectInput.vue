@@ -1,11 +1,11 @@
 <template>
   <div class="input-field col s12">
+    {{ communities }}
     <select :value="modelValue ? modelValue : value" @change="updateValue" :id="id">
       <option
         v-for="community in communities"
-        :key="community"
-        :value="community.value"
-      >
+        :key="community.id"
+        :value="community.id">
         {{ community.name }}
       </option>
     </select>
@@ -19,7 +19,7 @@
 export default {
   name: "SelectInput",
   props: {
-    communities: [],
+    communities: Array,
     id: "",
     label: "",
     value: null,
