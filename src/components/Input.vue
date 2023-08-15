@@ -1,8 +1,9 @@
 <template>
+  <span style="color: red">{{ (errorMsg != undefined) ? errorMsg[0] : ""  }}</span>
   <div class="input-field">
-
     <i v-if="icon" class="material-icons prefix" style="font-size: 16pt;">{{icon}}</i>
     <input
+      :style="(errorMsg != '') ? 'border-bottom: 1px solid red !important;' : 'border-bottom: 1px solid black !important'"
       :id="id"
       :type="type"
       :class="inputClass"
@@ -19,6 +20,7 @@ export default {
   name: "Input",
 
   props: {
+    errorMsg: "",
     icon: "",
     inputClass: "",
     type: "",
@@ -29,10 +31,10 @@ export default {
 
   data() {
     return {
-      modelValue: null,
     };
   },
-
+  updated() {
+  },
   methods: {
     async updateValue(event) {
       this.modelValue = event.target.value;

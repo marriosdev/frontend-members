@@ -1,6 +1,8 @@
 <template>
+  <span style="color: red">{{ (errorMsg != undefined) ? errorMsg[0] : ""  }}</span>
   <div class="input-field col s12">
-    <select class="" :value="modelValue ? modelValue : value" @change="updateValue" :id="id">
+    <select class="" :value="modelValue ? modelValue : value" @change="updateValue" :id="id"
+>
       <option value="">Selecione</option>
       <option
         v-for="community in communities"
@@ -19,6 +21,7 @@
 export default {
   name: "SelectInput",
   props: {
+    errorMsg: "",
     communities: Array,
     id: Number,
     label: String,

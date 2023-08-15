@@ -1,8 +1,8 @@
 <template>
+  <h5>Editar usuário</h5>
   <div class="container">
     <div class="form">
       <div class="container">
-        <h5>Editar usuário</h5>
 
         <Alerta
           v-if="erros.name != undefined"

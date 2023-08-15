@@ -49,7 +49,7 @@ export default {
         {
           text: "Membros",
           icon: "group_add",
-          link: "/adicionarMembro",
+          link: "/membros",
         },
         {
           text: "Comunidade",

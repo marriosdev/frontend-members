@@ -8,3 +8,7 @@
     --success: #4caf50;
     --warning: #ffc107;
   }
+
+  * {
+    color:  #424242 !important
+  }

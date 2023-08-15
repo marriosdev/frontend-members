@@ -1,23 +1,22 @@
 <template>
   <div class="container">
+    <h4>Cadastrar ADMIN</h4>
     <div class="form">
       <div class="container">
-        <h4>Cadastrar ADMIN</h4>
-        <hr />
         <div class="row">
-          <div class="col s6">
-            <SelectInput
-              :id="'community_id'"
-              :communities="communities"
-              v-model="community_id"
-              :label="'Selecione a comunidade'"
-            />
-          </div>
+          <SelectInput
+            :errorMsg="errors.community_id"
+            :id="'community_id'"
+            :communities="communities"
+            v-model="community_id"
+            :label="'Selecione a comunidade'"
+          />
         </div>
 
         <div class="row">
           <div class="col s6">
             <Input
+              :errorMsg="errors.name"
               :id="'name'"
               :icon="'edit_road'"
               :type="'text'"
@@ -27,6 +26,7 @@
           </div>
           <div class="col s6">
             <Input
+              :errorMsg="errors.lastname"
               :id="'lastname'"
               :icon="'edit_road'"
               :type="'text'"
@@ -39,6 +39,7 @@
         <div class="row">
           <div class="col s6">
             <Input
+              :errorMsg="errors.email"
               :id="'email'"
               :icon="'email'"
               :type="'text'"
@@ -48,6 +49,7 @@
           </div>
           <div class="col s6">
             <Input
+              :errorMsg="errors.phone"
               :id="'phone'"
               :icon="'phone'"
               :type="'text'"
@@ -60,6 +62,7 @@
         <div class="row">
           <div class="col s6">
             <Input
+              :errorMsg="errors.username"
               :id="'username'"
               :icon="'person'"
               :type="'text'"
@@ -69,6 +72,7 @@
           </div>
           <div class="col s6">
             <Input
+              :errorMsg="errors.password"
               :id="'password'"
               :icon="'lock'"
               :type="'text'"
@@ -92,6 +96,7 @@
 import Input from "@/components/Input.vue";
 import api from "../api.js";
 import SelectInput from "../Components/SelectInput.vue";
+import { createToast } from "mosha-vue-toastify";
 
 export default {
   name: "AddCommunityAdmin",
@@ -99,13 +104,24 @@ export default {
   components: {
     Input,
     SelectInput,
+    createToast,
   },
   data() {
     return {
+      errors: {
+        communities: "",
+        name: "",
+        lastname: "",
+        phone: "",
+        email: "",
+        address: "",
+        community_id: "",
+        username: "",
+        password: "",
+      },
       communities: Array,
       name: String,
       lastname: String,
-      description: String,
       phone: String,
       email: String,
       address: String,
@@ -116,10 +132,10 @@ export default {
       zipcode: String,
       username: String,
       password: String,
-      errors: [],
       success: false,
     };
   },
+  updated() {},
   mounted() {
     this.getCommunities();
   },
@@ -146,8 +162,19 @@ export default {
         username: this.username,
         password: this.password,
       };
-      api.post("/user", memberData);
-      console.log(memberData);
+      api
+        .post("/user", memberData)
+        .then((response) => {
+          console.log(response.data.errors);
+          createToast(`${this.name} cadastrado com sucesso!`, {
+            type: "success",
+            showIcon: "true",
+          });
+          this.errors = [];
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
     },
   },
 };

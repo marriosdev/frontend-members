@@ -1,15 +1,13 @@
 <template>
   <div class="container">
+    <h4>Adicionar novo membro</h4>
     <div class="form">
       <div class="container">
-        <h4>Adicionar novo membro</h4>
-        
-        <hr />
-
         <div class="row">
           <div class="col s6">
             <Input
               :id="'name'"
+              :errorMsg="errors.name"
               :icon="'edit_road'"
               :type="'text'"
               v-model="name"
@@ -18,6 +16,7 @@
           </div>
           <div class="col s6">
             <Input
+              :errorMsg="errors.lastname"
               :id="'lastname'"
               :icon="'edit_road'"
               :type="'text'"
@@ -30,6 +29,7 @@
         <div class="row">
           <div class="col s6">
             <Input
+              :errorMsg="errors.birthday"
               :id="'birthday'"
               :inputClass="''"
               :icon="'date_range'"
@@ -40,6 +40,7 @@
           </div>
           <div class="col s6">
             <Input
+              :errorMsg="errors.registration_number"
               :id="'registrationNumber'"
               :icon="'looks_one'"
               :type="'text'"
@@ -52,6 +53,7 @@
         <div class="row">
           <div class="col s6">
             <Input
+              :errorMsg="errors.nis"
               :id="'nis'"
               :icon="'description'"
               :type="'text'"
@@ -61,6 +63,7 @@
           </div>
           <div class="col s6">
             <Input
+              :errorMsg="errors.cpf"
               :id="'cpf'"
               :icon="'description'"
               :type="'text'"
@@ -73,6 +76,7 @@
         <div class="row">
           <div class="col s6">
             <Input
+              :errorMsg="errors.rg"
               :id="'rg'"
               :icon="'description'"
               :type="'text'"
@@ -83,6 +87,7 @@
 
           <div class="col s6">
             <Input
+              :errorMsg="errors.email"
               :id="'email'"
               :icon="'email'"
               :type="'text'"
@@ -95,6 +100,7 @@
         <div class="row">
           <div class="col s6">
             <Input
+              :errorMsg="errors.phone"
               :id="'phone'"
               :icon="'phone'"
               :type="'text'"
@@ -105,6 +111,7 @@
 
           <div class="col s6">
             <Input
+              :errorMsg="errors.address"
               :id="'address'"
               :icon="'home'"
               :type="'text'"
@@ -126,7 +133,8 @@
 
 <script>
 import Input from "@/components/Input.vue";
-import api from "../api.js"
+import api from "../api.js";
+import { createToast } from "mosha-vue-toastify";
 
 export default {
   name: "AddMember",
@@ -136,6 +144,18 @@ export default {
   },
   data() {
     return {
+      errors: {
+        name: String,
+        lastname: String,
+        birthday: Date,
+        rg: String,
+        phone: String,
+        email: String,
+        address: String,
+        nis: String,
+        cpf: String,
+        registration_number: Number,
+      },
       name: String,
       lastname: String,
       birthday: Date,
@@ -150,37 +170,44 @@ export default {
       state: String,
       country: String,
       zipcode: String,
-      community_id: String,
-      errors: Array,
       success: {
         type: Boolean,
-        default: false
+        default: false,
       },
     };
   },
   methods: {
     async submit() {
-     const memberData = {
-        "name": this.name,
-        "lastname":this.lastname,
-        "birthday":this.birthday,
-        "rg": this.rg,
-        "phone": this.phone,
-        "email": this.email,
-        "address": this.address,
-        "nis": this.nis,
-        "cpf": this.cpf,
-        "registration_number": this.registrationNumber,
-        "city": this.city,
-        "state": this.state,
-        "country": this.country,
-        "zipcode": this.zipcode,
-        "community_id": "1"
-      }
-
-      api.post('/members', memberData)
-      console.log(memberData)
-    }
+      const memberData = {
+        name: this.name,
+        lastname: this.lastname,
+        birthday: this.birthday,
+        rg: this.rg,
+        phone: this.phone,
+        email: this.email,
+        address: this.address,
+        nis: this.nis,
+        cpf: this.cpf,
+        registration_number: this.registrationNumber,
+        city: this.city,
+        state: this.state,
+        country: this.country,
+        zipcode: this.zipcode,
+      };
+      api
+        .post("/members", memberData)
+        .then((response) => {
+          console.log(response.data.errors);
+          createToast(`${this.name} cadastrado com sucesso!`, {
+            type: "success",
+            showIcon: "true",
+          });
+          this.errors = [];
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+    },
   },
 };
 </script>

@@ -22,8 +22,8 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/members',
-      name: 'members',
+      path: '/membros',
+      name: 'membros',
       component: Members
     },
     {
