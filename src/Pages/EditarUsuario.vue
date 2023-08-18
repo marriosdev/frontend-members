@@ -51,7 +51,6 @@ import Alerta from "../components/Alerta.vue";
 
 export default {
   name: "EditarUsuario",
-
   components: {
     Input,
     Alerta,

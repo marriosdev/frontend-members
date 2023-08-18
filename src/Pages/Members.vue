@@ -1,6 +1,14 @@
 <template>
+  <AddMemberModal :show="showModal" />
   <div class="container">
-    <h4>Membros cadastrados</h4>
+    <h4>Membros</h4>
+    <hr />
+    <ButtonModal
+      :modalId="'addMemberModal'"
+      :text="'Adicionar novo membro'"
+      :classCss="'btn-floating btn-large waves-effect waves-light blue'"
+      :icon="'add'"
+    />
     <table>
       <thead>
         <tr>
@@ -19,7 +27,7 @@
           <td>{{ member.cpf }}</td>
           <td>{{ member.registration_number }}</td>
           <a
-            class="btn-floating dropdown-trigger btn btn-small blue"
+            class="btn-floating dropdown-trigger btn btn-small blue waves-effect waves-light"
             style="margin-top: 10%"
             href="#"
             :data-target="`dropdown${member.id}`"
@@ -54,15 +62,30 @@
 
 <script>
 import api from "../api";
+import AddMemberModal from "./AddMemberModal.vue";
+import ButtonModal from "./ButtonModal.vue";
 export default {
-  components: {},
+  components: {
+    AddMemberModal,
+    ButtonModal,
+  },
 
   data() {
     return {
+      showModal: false,
       members: Array,
     };
   },
+  updated() {},
   methods: {
+    openModalAddMember() {
+      if (!this.showModal) {
+        this.showModal = true;
+      } else {
+        this.showModal = false;
+      }
+    },
+
     async getMembers() {
       api
         .get("/members")
@@ -78,7 +101,6 @@ export default {
     M.AutoInit();
   },
   mounted() {
-    M.AutoInit();
     this.getMembers();
   },
 };

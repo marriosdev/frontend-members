@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from '../Pages/Home.vue'
 import Members from '../Pages/Members.vue'
-import AddMember from '../Pages/AddMember.vue'
+// import AddMember from '../Pages/AddMember.vue'
 import AddCommunity from '../Pages/AddCommunity.vue'
 import AddCommunityAdmin from '../Pages/AddCommunityAdmin.vue'
 import Login from '../Pages/Login.vue'
@@ -26,11 +26,11 @@ const router = createRouter({
       name: 'membros',
       component: Members
     },
-    {
-      path: '/adicionarMembro',
-      name: 'adicionarMembro',
-      component: AddMember
-    },
+    // {
+    //   path: '/adicionarMembro',
+    //   name: 'adicionarMembro',
+    //   component: AddMember
+    // },
     {
       path: '/adicionarComunidade',
       name: 'adicionarComunidade',
