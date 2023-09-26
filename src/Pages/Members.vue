@@ -34,15 +34,17 @@
             ><i class="material-icons tinny">more_vert</i>
           </a>
           <ul :id="`dropdown${member.id}`" class="dropdown-content">
+            <router-link :to="'/member/' + member.uuid">
             <li>
-              <span
-                ><i
-                  style="color: rgb(0, 211, 112) !important"
-                  class="material-icons tinny"
-                  >payment</i
-                ></span
-              >
-            </li>
+                <span
+                  ><i
+                    style="color: rgb(0, 211, 112) !important"
+                    class="material-icons tinny"
+                    >payment</i
+                  ></span
+                >
+              </li>
+            </router-link>
             <li>
               <span style="color: #00b7cf !important"
                 ><i class="material-icons">create</i></span
@@ -69,7 +71,6 @@ export default {
     AddMemberModal,
     ButtonModal,
   },
-
   data() {
     return {
       showModal: false,
