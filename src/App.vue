@@ -35,5 +35,8 @@ export default {
   display: flex;
   flex-direction: row;
 }
+.indicator {
+  background-color: #005ca7c0 !important;
+}
 </style>
 
