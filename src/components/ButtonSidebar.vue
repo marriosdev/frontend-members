@@ -33,12 +33,13 @@ export default {
     justify-content: start;
     border-radius: 0;
     line-clamp: 100px;
-    background-color: #00000000;
+    background-color: rgba(0, 0, 0, 0);
     box-shadow: none !important;
+    color: rgb(34, 34, 34);
 }
 
 .button-sidebar:hover {
-    background-color: #003a61 !important;
+    background-color: #003a616b !important;
     border-radius: 10px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="addMemberModal" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <div class="container">
+      <div class="">
         <h5>Adicionar novo membro</h5>
         <div class="form">
             <div class="row">
@@ -43,7 +43,7 @@
                 <Input
                   :errorMsg="errors.registration_number"
                   :id="'registrationNumber'"
-                  :icon="'looks_one'"
+                  :icon="'looks_one '"
                   :type="'text'"
                   v-model="registrationNumber"
                   :label="'Nº de Inscrição'"
@@ -225,7 +225,7 @@ export default {
 
 <style scoped>
 .modal {
-  width: 90% !important;
+  width: 60% !important;
   top: 5% !important;
   height: 90vh !important;
   min-height: 90vh !important;
@@ -233,7 +233,6 @@ export default {
 }
 
 .form {
-  border: 1px solid rgb(196, 196, 196);
   padding-bottom: 20px;
 }
 .box-button {

@@ -1,123 +1,210 @@
 <template>
-  <AddMemberModal :show="showModal" />
+  <InfoMonthlyPaymentModal
+    :uuid="monthlyPaymentIdModal"
+  />
+  <AddMonthlyPayment
+    @updateMonthlyPayments="getMonthlyPayments()"
+    :show="showModal"
+  />
   <div class="container">
     <h5>Detalhes</h5>
     <hr />
     <div class="">
       <div style="display: flex; align-items: start">
-        <i style="color: rgb(75, 83, 85) !important; font-size: 8rem !important;" class="material-icons">
+        <i
+          style="color: rgb(75, 83, 85) !important; font-size: 10rem !important"
+          class="material-icons"
+        >
           person
         </i>
-        <div style="display: flex; flex-direction: column;">
-          <h5 >
+        <div style="display: flex; flex-direction: column">
+          <h5>
             {{ member.name }}
           </h5>
+          <span>
+            <p>
+              Nº <strong>{{ member.registration_number }}</strong>
+            </p>
+            <p>
+              CPF <strong>{{ member.cpf }}</strong>
+            </p>
+          </span>
         </div>
       </div>
-      <ul class="tabs tabs-fixed-width flow-text  blue lighten-2">
-        <li class="tab"><a class="active" href="#memberInfos" style="color: black !important">Informações pessoais</a></li>
-        <li class="tab"><a href="#monthlyPaymentsTable" style="color: black !important">Faturas</a></li>
+      <ul class="tabs tabs-fixed-width flow-text">
+        <li class="tab">
+          <a class="active" href="#memberInfos" style="color: black !important"
+            >Informações pessoais</a
+          >
+        </li>
+        <li class="tab">
+          <a href="#monthlyPaymentsTable" style="color: black !important"
+            >Faturas</a
+          >
+        </li>
       </ul>
-      <div id="memberInfos">
-        asodkapsdo
-      </div>
+      <div id="memberInfos">INFOS</div>
       <div id="monthlyPaymentsTable">
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 50px">Status</th>
-                <th>Valor</th>
-                <th>Emissão</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody
-              v-for="monthlyPayment in member.monthly_payments"
-              :key="monthlyPayment">
-              <tr>
-                <td
-                  v-if="monthlyPayment.payment_status.id == 1"
-                  class="td-status ">
-                  <p class="status-payment lime accent-1">
-                    {{ monthlyPayment.payment_status.name }}
-                  </p>
-                </td>
-                <td
-                  v-if="monthlyPayment.payment_status.id == 2"
-                  class="td-status ">
-                  <p class="status-payment red lighten-3">
-                    {{ monthlyPayment.payment_status.name }}
-                  </p>
-                </td>
+        <div
+          class="container"
+          style="display: flex; justify-content: end; margin: 10px; width: 100%"
+        >
+          <ButtonModal
+            :modalId="'generateMonthlyPayment'"
+            :text="'Criar nova fatura'"
+            :icon="'add'"
+          />
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 50px">Status</th>
+              <th>Valor</th>
+              <th>Emissão</th>
+              <th>Vencimento</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody
+            v-for="monthlyPayment in monthlyPayments"
+            :key="monthlyPayment"
+          >
+            <tr>
+              <td
+                v-if="monthlyPayment.payment_status.id == 1"
+                class="td-status"
+              >
+                <p class="status-payment orange accent-1">
+                  {{ monthlyPayment.payment_status.name }}
+                </p>
+              </td>
+              <td
+                v-if="monthlyPayment.payment_status.id == 2"
+                class="td-status"
+              >
+                <p class="status-payment orange accent-4">
+                  {{ monthlyPayment.payment_status.name }}
+                </p>
+              </td>
 
-                <td
-                  v-if="monthlyPayment.payment_status.id == 3"
-                  class="td-status">
-                  <p class="status-payment light-green accent-1">
-                    {{ monthlyPayment.payment_status.name }}
-                  </p>
-                </td>
+              <td
+                v-if="monthlyPayment.payment_status.id == 3"
+                class="td-status"
+              >
+                <p class="status-payment red accent-3">
+                  {{ monthlyPayment.payment_status.name }}
+                </p>
+              </td>
 
-                <td>R$ {{ monthlyPayment.value }}</td>
+              <td
+                v-if="monthlyPayment.payment_status.id == 4"
+                class="td-status"
+              >
+                <p class="status-payment light-green accent-1">
+                  {{ monthlyPayment.payment_status.name }}
+                </p>
+              </td>
 
-                <td>{{ monthlyPayment.created_at }}</td>
-
-                <td>
-                  <span>
-                    <i
-                      style="color: rgb(0, 204, 255) !important"
-                      class="material-icons tinny"
-                      >infos
-                    </i>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              <td>R$ {{ monthlyPayment.value }}</td>
+              <td>{{ monthlyPayment.created_at }}</td>
+              <td>{{ monthlyPayment.due_date }}</td>
+              <td>
+                <ButtonModal
+                  @click="setMonthlyPaymentIdModal(`${monthlyPayment.uuid}`)"
+                  :modalId="'infoMonthlyPaymentModal'"
+                  :icon="'info'"
+                  :classCss="'rounded'"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </template>
   
 <script>
-  import api from "../api";
-  import AddMemberModal from "./AddMemberModal.vue";
-  import ButtonModal from "./ButtonModal.vue";
-  export default {
-    components: {
-      AddMemberModal,
-      ButtonModal,
+import Button from "../Components/Button.vue";
+import api from "../api";
+import ButtonModal from "./ButtonModal.vue";
+import AddMonthlyPayment from "../Components/AddMonthlyPayment.vue";
+import { createToast } from "mosha-vue-toastify";
+import InfoMonthlyPaymentModal from "../Components/infoMonthlyPaymentModal.vue";
+
+export default {
+  data() {
+    return {
+      monthlyPaymentIdModal: "",
+      showModal: false,
+      member: Array,
+      monthlyPayments: Array,
+    };
+  },
+  components: {
+    Button,
+    ButtonModal,
+    AddMonthlyPayment,
+    InfoMonthlyPaymentModal,
+  },
+  methods: {
+    async setMonthlyPaymentIdModal(monthlyPaymentId) {
+      this.monthlyPaymentIdModal = monthlyPaymentId;
     },
-    data() {
-      return {
-        member: Array,
-      };
-    },
-    updated() {},
-    created() {
+    async getMember() {
       const memberId = this.$route.params.memberId;
       api.get(`/member/${memberId}`).then((response) => {
         this.member = response.data;
+        this.getMonthlyPayments();
       });
     },
-    methods: {
-      async updateValueMonthlyPayment(element, monthlyPaymentId) {},
+    async generateMonthlyPayment() {
+      api
+        .post(`/monthlypayment/${this.$route.params.memberId}`)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw Error();
+          }
+          createToast(response.data.message, {
+            type: "success",
+            showIcon: "true",
+          });
+          this.getMonthlyPayments();
+        })
+        .catch((error) => {
+          createToast("Ocorreu um erro ao gerar a fatura.", {
+            type: "danger",
+            showIcon: "true",
+          });
+        });
     },
-    updated() {
-      M.AutoInit();
+    async getMonthlyPayments() {
+      const memberId = this.$route.params.memberId;
+      api.get(`/member/${memberId}/monthlypayment`).then((response) => {
+        this.monthlyPayments = response.data;
+        createToast("Faturas atualizadas!", {
+          type: "success",
+          showIcon: "true",
+        });
+      });
     },
-    mounted() {},
-  };
+    async updateValueMonthlyPayment(element, monthlyPaymentId) {},
+  },
+  created() {
+    M.AutoInit();
+    this.getMember();
+  },
+};
 </script>
   
 <style scoped>
-  .status-payment {
-    padding: 5px;
-    border-radius: 15px;
-    font-size: 9pt;
-  }
+.status-payment {
+  padding: 5px;
+  border-radius: 15px;
+  font-size: 9pt;
+}
 
-  .td-status {
-    text-align: center;
-  }
+.td-status {
+  text-align: center;
+}
 </style>

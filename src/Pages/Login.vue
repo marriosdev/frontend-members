@@ -19,10 +19,10 @@
 <script>
 import Input from "../Components/Input.vue";
 import Button from "../Components/Button.vue";
+import { createToast } from "mosha-vue-toastify";
 
 export default {
   name: "Login",
-
   components: {
     Input,
     Button,
@@ -30,8 +30,6 @@ export default {
 
   data() {
     return {
-      mensagemErro: "",
-      sucesso: false,
       email: "",
       senha: "",
     };
@@ -47,15 +45,15 @@ export default {
           password: this.senha,
         })
         .then((response) => {
-          this.sucesso = true;
-          this.erros = [];
-          localStorage.setItem("token", response.data.access_token);
-          localStorage.setItem("isLogged", true);
-          window.location.href = "/";
+          localStorage.setItem("token", response.data.jwt.access_token);
+          localStorage.setItem("info", JSON.stringify(response.data.user));
+          window.location.reload();
         })
         .catch((error) => {
-          this.sucesso = false;
-          this.mensagemErro = error.response.data.message;
+          createToast(`${error.response.data.message}`, {
+            type: "danger",
+            showIcon: "true",
+          });
         });
     },
   },

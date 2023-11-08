@@ -1,19 +1,29 @@
 <template>
-  <div id="sidebar" v-if="isLogged =='true'" class="sidenav-fixed">
+  <div id="sidebar" v-if="showSidebar" class="sidenav-fixed">
     <div>
       <div id="header-sidebar">
-        <div>
-          <h3>LOGO</h3>
-        </div>
-        <div style="padding: 10px; display: flex; justify-content: start; width: 100%; margin-top: 10px; margin-bottom: 10px">
-          <CirculaIcon @click="logout" :icon="'exit_to_app'" />
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-size: 13pt; display: flex; align-items: center;">
+            <img  style="width: 40px;" src="../assets/img/profile-icon.png" alt="" srcset="">
+            {{ username }}
+          </span>
+          <span style="font-size: 8pt;">
+            {{ profile }}
+          </span>
         </div>
       </div>
       <ul v-for="buttonSidebar in buttons" :key="buttonSidebar.text">
         <li>
-          <ButtonSidebar :text="buttonSidebar.text" :icon="buttonSidebar.icon" :link="buttonSidebar.link" />
+          <ButtonSidebar
+          :text="buttonSidebar.text"
+          :icon="buttonSidebar.icon"
+          :link="buttonSidebar.link"
+          />
         </li>
       </ul>
+      <span style="float: left; margin-bottom: 15px;">
+        <CirculaIcon @click="logout" :icon="'exit_to_app'"/>
+      </span>
     </div>
     <div id="footer-sidebar">
       <ul>
@@ -27,7 +37,6 @@
 </template>
 
 <script>
-
 import ButtonSidebar from "../Components/ButtonSidebar.vue";
 import CirculaIcon from "./CirculaIcon.vue";
 
@@ -35,16 +44,18 @@ export default {
   name: "Sidebar",
   components: {
     ButtonSidebar,
-    CirculaIcon
+    CirculaIcon,
   },
   data() {
     return {
-      isLogged: Boolean,
+      showSidebar: (!localStorage.getItem("token") ? false : true) ,
+      username: "",
+      profile: "",
       buttons: [
         {
           text: "Inicio",
           icon: "home",
-          link: "/",
+          link: "/home",
         },
         {
           text: "Membros",
@@ -66,26 +77,38 @@ export default {
   },
   methods: {
     async logout() {
-      localStorage.setItem("isLogged", false);
-      localStorage.removeItem("token");
+      localStorage.clear();
       this.$router.push("/login");
-      this.isLogged = false;
-    }
-  },    
-  mounted() {
-    this.isLogged = localStorage.getItem("isLogged");
+      this.showSidebar = false;
+      window.location.reload();
+    },
+  },
+  watch: {
+    $route(to, from) {
+      if (to.path == "/login") {
+        this.showSidebar = false;
+      } else {
+        this.username = JSON.parse(localStorage.getItem("info")).name;
+        this.profile = JSON.parse(localStorage.getItem("info")).profile;
+        this.showSidebar = true;
+      }
+    },
+  },
+  updated() {
   },
 };
 </script>
 
 <style scoped>
-
 #sidebar {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 15px;
   justify-content: space-between;
   position: sticky;
   min-width: 200px;
-  min-height: 100vh !important;
-  background-color: var(--primary);
+  height: 99vh !important;
+  background-color: #ffffff;
   top: 0;
   left: 0;
   z-index: 999;
@@ -95,11 +118,10 @@ export default {
 
 #header-sidebar {
   display: flex;
-  flex-direction: column;;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100px;
-  background-color: #00000000;
 }
 
 #footer-sidebar {
