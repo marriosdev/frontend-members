@@ -80,5 +80,41 @@ export default {
 .warning {
   background-color: rgb(255, 208, 0) !important;
 }
+
+*::-webkit-scrollbar {
+  width:5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(100, 100, 100);
+  border-radius: 20px; 
+}
+
+.bolinha {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.status-payment {
+  align-items: center;
+  padding: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  border-radius: 15px;
+  font-size: 9pt;
+  width: 100px;
+}
+
+option {
+  font-size: 9pt !important;
+  color: black !important;
+}
 </style>
 

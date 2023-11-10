@@ -57,11 +57,13 @@ export default {
           icon: "home",
           link: "/home",
         },
+
         {
           text: "Membros",
           icon: "group_add",
           link: "/membros",
         },
+
         {
           text: "Comunidade",
           icon: "people",
@@ -100,7 +102,22 @@ export default {
 </script>
 
 <style scoped>
+
+#sidebar::-webkit-scrollbar {
+  width:3px; 
+}
+
+#sidebar::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255);
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+  background-color: rgb(139, 139, 139);
+  border-radius: 20px; 
+}
+
 #sidebar {
+  overflow: auto;
   padding: 10px;
   margin: 10px;
   border-radius: 15px;

@@ -1,7 +1,5 @@
 <template>
-  <InfoMonthlyPaymentModal
-    :uuid="monthlyPaymentIdModal"
-  />
+  <InfoMonthlyPaymentModal :uuid="monthlyPaymentIdModal" />
   <AddMonthlyPayment
     @updateMonthlyPayments="getMonthlyPayments()"
     :show="showModal"
@@ -71,38 +69,55 @@
           >
             <tr>
               <td
-                v-if="monthlyPayment.payment_status.id == 1"
-                class="td-status"
+                v-if="
+                  monthlyPayment.payment_status &&
+                  monthlyPayment.payment_status.id == 1
+                "
               >
-                <p class="status-payment orange accent-1">
-                  {{ monthlyPayment.payment_status.name }}
-                </p>
+                <div class="status-payment orange accent-1">
+                  <span class="bolinha orange accent-5"></span>
+                  {{
+                    monthlyPayment.payment_status &&
+                    monthlyPayment.payment_status.name
+                  }}
+                </div>
               </td>
               <td
-                v-if="monthlyPayment.payment_status.id == 2"
-                class="td-status"
+                v-if="
+                  monthlyPayment.payment_status &&
+                  monthlyPayment.payment_status.id == 2
+                "
               >
-                <p class="status-payment orange accent-4">
+                <div class="status-payment blue-grey lighten-4">
+                  <span class="bolinha blue-grey lighten-10"></span>
                   {{ monthlyPayment.payment_status.name }}
-                </p>
+                </div>
               </td>
 
               <td
-                v-if="monthlyPayment.payment_status.id == 3"
-                class="td-status"
+                v-if="
+                  monthlyPayment.payment_status &&
+                  monthlyPayment.payment_status.id == 3
+                "
               >
-                <p class="status-payment red accent-3">
+                <div class="status-payment  red accent-1">
+                  <span class="bolinha red accent-6"></span>
                   {{ monthlyPayment.payment_status.name }}
-                </p>
+                </div>
               </td>
 
               <td
-                v-if="monthlyPayment.payment_status.id == 4"
-                class="td-status"
+                v-if="
+                  monthlyPayment.payment_status &&
+                  monthlyPayment.payment_status.id == 4
+                "
               >
-                <p class="status-payment light-green accent-1">
-                  {{ monthlyPayment.payment_status.name }}
-                </p>
+                <div>
+                  <div class="status-payment light-green accent-1">
+                    <span class="bolinha light-green accent-6"></span>
+                    {{ monthlyPayment.payment_status.name }}
+                  </div>
+                </div>
               </td>
 
               <td>R$ {{ monthlyPayment.value }}</td>
@@ -198,12 +213,6 @@ export default {
 </script>
   
 <style scoped>
-.status-payment {
-  padding: 5px;
-  border-radius: 15px;
-  font-size: 9pt;
-}
-
 .td-status {
   text-align: center;
 }
