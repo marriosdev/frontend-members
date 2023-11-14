@@ -1,73 +1,88 @@
 <template>
-  <div id="infoMonthlyPaymentModal" class="modal modal-fixed-footer">
+  <div id="infoMonthlyPaymentModal" :class="classModal">
     <div class="modal-content">
       <div class="">
         <h5>Informações da Fatura</h5>
         <br />
-        <div class="">
+        <Loader :show="loading" />
+        <div class="" v-if="!loading">
           <div class="row">
             <div class="col s6">
-              Nº: <strong>{{ monthlyPayment.id }}</strong>
+              Nº: <strong>{{ id }}</strong>
             </div>
-            <div class="col s6">
-              <div
-                v-if="
-                  monthlyPayment.payment_status &&
-                  monthlyPayment.payment_status.id == 4
-                "
-                class="status-payment light-green accent-1"
-              >
-                <span class="bolinha light-green accent-6"></span>
-                {{ monthlyPayment.payment_status.name }}
+            <div v-if="payment_status_id && payment_status_id == 1">
+              <div class="status-payment orange accent-1">
+                <span class="bolinha orange accent-5"></span>
+                {{ payment_status_name }}
+              </div>
+            </div>
+            <div v-if="payment_status_id && payment_status_id == 2">
+              <div class="status-payment blue-grey lighten-4">
+                <span class="bolinha blue-grey lighten-10"></span>
+                {{ payment_status_name }}
+              </div>
+            </div>
+
+            <div v-if="payment_status_id && payment_status_id == 3">
+              <div class="status-payment red accent-1">
+                <span class="bolinha red accent-6"></span>
+                {{ payment_status_name }}
+              </div>
+            </div>
+
+            <div v-if="payment_status_id && payment_status_id == 4">
+              <div>
+                <div class="status-payment light-green accent-1">
+                  <span class="bolinha light-green accent-6"></span>
+                  {{ payment_status_name }}
+                </div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col s6">
-              <!-- Valor: R$<strong>{{ monthlyPayment.value }}</strong> -->
               <Input
                 :id="'valor'"
                 :type="'text'"
-                v-model="monthlyPayment.value"
-                :value="monthlyPayment.value"
+                @input="moneyFormatter()"
+                v-model="value"
+                :value="value"
                 :label="'R$ Valor'"
               />
             </div>
             <div class="col s6">
-              <!-- Data do pagamento:
-              <strong>{{ monthlyPayment.payment_date }}</strong> -->
               <Input
-                :id="'valor'"
+                @click="setpaymendivate(this.value)"
+                :id="'data_pagamento'"
                 :type="'date'"
-                v-model="monthlyPayment.payment_date"
-                :value="monthlyPayment.payment_date"
+                v-model="payment_date"
+                :value="payment_date"
                 :label="'Data do pagamento'"
               />
             </div>
           </div>
           <div class="row">
             <div class="col s6">
-              <select name="" id="paymentStatus">
-                <option value="">Status do pagamento</option>
-                <!--  pegar selecionado e marcar o selected-->
+              <select name="" id="paymentStatus" v-model="payment_status_id">
+                <option selected value="">Status do pagamento</option>
                 <option
-                v-for="status in paymentStatuses"
-                :key="status.id"
-                :value="status.id"
-                :selected="status.id == monthlyPayment.payment_status_id"
+                  v-for="status in paymentStatuses"
+                  :key="status.id"
+                  :value="status.id"
+                  :selected="status.id == payment_status_id"
                 >
                   {{ status.name }}
                 </option>
               </select>
             </div>
             <div class="col s6">
-              <select name="" id="paymentMethod">
-                <option value="">Forma de pagamento</option>
+              <select name="" id="paymentMethod" v-model="payment_method_id">
+                <option selected value="">Forma de pagamento</option>
                 <option
                   v-for="method in paymentMethods"
                   :key="method.id"
                   :value="method.id"
-                  :selected="method.id == monthlyPayment.payment_method_id"
+                  :selected="method.id == payment_method_id"
                 >
                   {{ method.name }}
                 </option>
@@ -76,44 +91,40 @@
           </div>
           <div class="row">
             <div class="col s6">
-              <!-- Emissão: <strong>{{ monthlyPayment.created_at }}</strong> -->
               <Input
-                :id="'valor'"
+                :id="'emissao'"
                 :type="'date'"
-                v-model="monthlyPayment.created_at"
-                :value="monthlyPayment.created_at"
-                :label="'Emissão'"
+                v-model="emission_date"
+                :value="emission_date"
+                :label="'Emissão (não pode ser alterado)'"
               />
             </div>
             <div class="col s6">
-              <!-- Link: <strong>{{ monthlyPayment.payment_link }}</strong> -->
               <Input
-                :id="'valor'"
+                :id="'link_pagamento'"
                 :type="'text'"
-                v-model="monthlyPayment.payment_link"
-                :value="monthlyPayment.payment_link"
+                v-model="payment_link"
+                :value="payment_link"
                 :label="'Link de pagamento'"
               />
             </div>
           </div>
           <div class="row">
             <div class="col s6">
-              <!-- Vencimento: <strong>{{ monthlyPayment.due_date }}</strong> -->
               <Input
-                :id="'valor'"
+                :id="'vencimento'"
                 :type="'date'"
-                v-model="monthlyPayment.due_date"
-                :value="monthlyPayment.due_date"
-                :label="'Vencimento' + monthlyPayment.due_date"
+                v-model="due_date"
+                :value="due_date"
+                :label="'Vencimento'"
               />
             </div>
             <div class="col s6">
-              <!-- Código: <strong>{{ monthlyPayment.payment_code }}</strong> -->
               <Input
-                :id="'valor'"
+                :id="'codigo_pagamento'"
                 :type="'text'"
-                v-model="monthlyPayment.payment_code"
-                :value="monthlyPayment.payment_code"
+                v-model="payment_code"
+                :value="payment_code"
                 :label="'Código do pagamento'"
               />
             </div>
@@ -122,15 +133,13 @@
       </div>
     </div>
     <div class="modal-footer">
-      <!-- <button style="margin-right: 10px" @click="submit" class="waves-effect waves-light btn submit">
-        <i class="material-icons right">save</i>Salvar
-      </button> -->
       <a
         style="color: white"
         class="modal-close red waves-effect waves-green btn-flat"
         >Fechar</a
       >
       <button
+        @click="saveInfos"
         style="
           border: 1px solid green;
           margin-left: 10px;
@@ -149,12 +158,15 @@
 import Input from "@/components/Input.vue";
 import api from "../api.js";
 import { createToast } from "mosha-vue-toastify";
+import Loader from "./Loader.vue";
+import M, { AutoInit } from "materialize-css";
 
 export default {
   name: "AddMonthlyPayment",
 
   components: {
     Input,
+    Loader,
   },
   props: {
     uuid: "",
@@ -162,10 +174,18 @@ export default {
   },
   data() {
     return {
-      monthlyPayment: Array,
-      paymentMethod: Array,
-      paymentStatus: Array,
+      payment_status_name: "",
+      classModal: "modal modal-fixed-footer",
+      loading: false,
+      payment_status_id: "",
+      payment_method_id: "",
       value: "",
+      payment_date: "",
+      payment_link: "",
+      due_date: "",
+      payment_code: "",
+      emission_date: "",
+      id: "",
       errors: {},
       success: {},
       paymentMethods: Array,
@@ -175,37 +195,93 @@ export default {
   updated() {
     M.AutoInit();
   },
-  mounted() {
-    api.get("getPaymentMethodAndPaymentStatus").then((response) => {
-      this.paymentMethods = response.data.paymentMethods;
-      this.paymentStatuses = response.data.paymentStatus;
-    });
+  created() {
+    api
+      .get("getPaymentMethodAndPaymentStatus")
+      .then((response) => {
+        this.paymentMethods = response.data.paymentMethods;
+        this.paymentStatuses = response.data.paymentStatus;
+      })
+      .finally(() => {
+        this.classModal = "no-autoinit " + this.classModal;
+      });
   },
 
   methods: {
-    async getInfos(uuid) {
+    async moneyFormatter()
+    {
+      this.value = this.value.replace(/\D/g, "").replace(/(\d)(\d{2})$/, "$1.$2");
+    },
+    async saveInfos() {
+      this.loading = true;
+      api
+        .put(`monthlypayment/${this.uuid}`, {
+          payment_status_id: document.getElementById("paymentStatus").value,
+          payment_method_id: document.getElementById("paymentMethod").value,
+          value: document.getElementById("valor").value,
+          payment_date: document.getElementById("data_pagamento").value,
+          payment_link: document.getElementById("link_pagamento").value,
+          due_date: document.getElementById("vencimento").value,
+          payment_code: document.getElementById("codigo_pagamento").value,
+        })
+        .then((response) => {
+          if (response.status !== 200) {
+            throw Error();
+          }
+          createToast(`Fatura atualizada com sucesso!`, {
+            type: "success",
+            showIcon: "true",
+          });
+          this.getInfos(this.uuid);
+        })
+        .catch((error) => {
+          createToast(`Ocorreu um erro ao atualizar a fatura!`, {
+            type: "danger",
+            showIcon: "true",
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+          this.$emit("updateMonthlyPayments");
+        });
+    },
 
+    async getInfos(uuid) {
+      this.loading = true;
       api
         .get(`monthlypayment/${uuid}`)
         .then((response) => {
           if (response.status !== 200) {
             throw Error();
           }
-          this.monthlyPayment = response.data;
-          this.paymentStatus = response.data.payment_status;
-          this.paymentMethod = response.data.payment_method;
+          this.payment_status_id = response.data.payment_status_id;
+          this.payment_method_id = response.data.payment_method_id;
+          this.value = response.data.value;
+          this.payment_date = response.data.payment_date;
+          this.payment_link = response.data.payment_link;
+          this.due_date = response.data.due_date;
+          this.payment_code = response.data.payment_code;
+          this.emission_date = response.data.emission_date;
+          this.id = response.data.id;
+          this.payment_status_name = response.data.payment_status.name;
         })
         .catch((error) => {
           createToast(`Ocorreu um erro ao consultar a fatura!`, {
             type: "danger",
             showIcon: "true",
           });
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
   },
   watch: {
     uuid() {
       this.getInfos(this.uuid);
+    },
+    value() {
+      this.moneyFormatter()    
     },
   },
 };
@@ -214,9 +290,8 @@ export default {
 <style scoped>
 .modal {
   width: 60% !important;
-  top: 10% !important;
-  height: 90vh !important;
-  min-height: 80vh !important;
+  top: 5% !important;
+  min-height: 90vh !important;
 }
 
 .form {

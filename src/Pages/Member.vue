@@ -1,5 +1,8 @@
 <template>
-  <InfoMonthlyPaymentModal :uuid="monthlyPaymentIdModal" />
+  <InfoMonthlyPaymentModal
+    @updateMonthlyPayments="getMonthlyPayments()"
+    :uuid="monthlyPaymentIdModal"
+  />
   <AddMonthlyPayment
     @updateMonthlyPayments="getMonthlyPayments()"
     :show="showModal"
@@ -7,7 +10,8 @@
   <div class="container">
     <h5>Detalhes</h5>
     <hr />
-    <div class="">
+    <Loader :show="loading" />
+    <div class="" v-if="!loading">
       <div style="display: flex; align-items: start">
         <i
           style="color: rgb(75, 83, 85) !important; font-size: 10rem !important"
@@ -100,7 +104,7 @@
                   monthlyPayment.payment_status.id == 3
                 "
               >
-                <div class="status-payment  red accent-1">
+                <div class="status-payment red accent-1">
                   <span class="bolinha red accent-6"></span>
                   {{ monthlyPayment.payment_status.name }}
                 </div>
@@ -120,7 +124,8 @@
                 </div>
               </td>
 
-              <td>R$ {{ monthlyPayment.value }}</td>
+              <!-- Formatar moeda para BRL -->
+              <td>R$ {{ (monthlyPayment.value) }}</td>
               <td>{{ monthlyPayment.created_at }}</td>
               <td>{{ monthlyPayment.due_date }}</td>
               <td>
@@ -146,10 +151,12 @@ import ButtonModal from "./ButtonModal.vue";
 import AddMonthlyPayment from "../Components/AddMonthlyPayment.vue";
 import { createToast } from "mosha-vue-toastify";
 import InfoMonthlyPaymentModal from "../Components/infoMonthlyPaymentModal.vue";
+import Loader from "../Components/Loader.vue";
 
 export default {
   data() {
     return {
+      loading: false,
       monthlyPaymentIdModal: "",
       showModal: false,
       member: Array,
@@ -161,17 +168,24 @@ export default {
     ButtonModal,
     AddMonthlyPayment,
     InfoMonthlyPaymentModal,
+    Loader,
   },
   methods: {
     async setMonthlyPaymentIdModal(monthlyPaymentId) {
       this.monthlyPaymentIdModal = monthlyPaymentId;
     },
     async getMember() {
+      this.loading = true;
       const memberId = this.$route.params.memberId;
-      api.get(`/member/${memberId}`).then((response) => {
-        this.member = response.data;
-        this.getMonthlyPayments();
-      });
+      api
+        .get(`/member/${memberId}`)
+        .then((response) => {
+          this.member = response.data;
+          this.getMonthlyPayments();
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     async generateMonthlyPayment() {
       api
@@ -191,16 +205,13 @@ export default {
             type: "danger",
             showIcon: "true",
           });
-        });
+        })
+        .finally(() => {});
     },
     async getMonthlyPayments() {
       const memberId = this.$route.params.memberId;
       api.get(`/member/${memberId}/monthlypayment`).then((response) => {
         this.monthlyPayments = response.data;
-        createToast("Faturas atualizadas!", {
-          type: "success",
-          showIcon: "true",
-        });
       });
     },
     async updateValueMonthlyPayment(element, monthlyPaymentId) {},

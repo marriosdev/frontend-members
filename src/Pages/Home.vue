@@ -7,11 +7,9 @@
     </div>
   </div>
   
-  <Alert message="sdasd"/>
 </template>
 
 <script>
-import Alert from '../Components/Alert.vue';
 import Button from '../Components/Button.vue';
 import api from "../api.js";
 import { createToast } from "mosha-vue-toastify";
@@ -19,7 +17,6 @@ import { createToast } from "mosha-vue-toastify";
 export default {
   name: "Home",
   components: {
-    Alert,
     Button,
   },
   methods: {

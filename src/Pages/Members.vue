@@ -8,8 +8,10 @@
       :text="'Adicionar novo membro'"
       :icon="'add'"
     />
+
     <table>
-      <thead>
+      <Loader :show="loading" />
+      <thead v-if="!loading">
         <tr>
           <th>Nome</th>
           <th>RG</th>
@@ -34,8 +36,11 @@
               ><i class="material-icons tinny">more_vert</i>
             </a>
             <ul :id="`dropdown${member.id}`" class="dropdown-content">
-              <router-link :to="'/member/' + member.uuid" style="width: 10px !important; background-color: red;">
-                <li >
+              <router-link
+                :to="'/member/' + member.uuid"
+                style="width: 10px !important; background-color: red"
+              >
+                <li>
                   <span
                     ><i
                       style="color: rgb(0, 98, 211) !important"
@@ -57,13 +62,17 @@
 import api from "../api";
 import AddMemberModal from "../Components/AddMemberModal.vue";
 import ButtonModal from "./ButtonModal.vue";
+import Loader from "../Components/Loader.vue";
+
 export default {
   components: {
     AddMemberModal,
     ButtonModal,
+    Loader,
   },
   data() {
     return {
+      loading: false,
       showModal: false,
       members: Array,
     };
@@ -79,6 +88,7 @@ export default {
     },
 
     async getMembers() {
+      this.loading = true;
       api
         .get("/members")
         .then((response) => {
@@ -86,6 +96,9 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
   },
