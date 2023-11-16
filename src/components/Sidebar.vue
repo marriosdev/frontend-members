@@ -63,7 +63,12 @@ export default {
           icon: "group_add",
           link: "/membros",
         },
-
+        {
+          // icon: "av_timer",
+          icon: "opacity",
+          text: "Leituras",
+          link: "/leituraMensal",
+        },
         {
           text: "Comunidade",
           icon: "people",

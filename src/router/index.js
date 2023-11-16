@@ -12,6 +12,15 @@ const router = createRouter({
 
   routes: [
     {
+      path: "/leituraMensal",
+      name: "leituraMensal",
+      component: () => import("../Pages/MonthlyReading.vue"),
+      meta: {
+        auth: true
+      }
+    },
+    {
+
       path: '/logout',
       name: 'logout',
       meta: {

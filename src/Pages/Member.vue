@@ -147,7 +147,7 @@
 <script>
 import Button from "../Components/Button.vue";
 import api from "../api";
-import ButtonModal from "./ButtonModal.vue";
+import ButtonModal from "../Components/ButtonModal.vue";
 import AddMonthlyPayment from "../Components/AddMonthlyPayment.vue";
 import { createToast } from "mosha-vue-toastify";
 import InfoMonthlyPaymentModal from "../Components/infoMonthlyPaymentModal.vue";

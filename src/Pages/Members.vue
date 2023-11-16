@@ -61,7 +61,7 @@
 <script>
 import api from "../api";
 import AddMemberModal from "../Components/AddMemberModal.vue";
-import ButtonModal from "./ButtonModal.vue";
+import ButtonModal from "../Components/ButtonModal.vue";
 import Loader from "../Components/Loader.vue";
 
 export default {

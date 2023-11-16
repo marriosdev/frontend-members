@@ -1,8 +1,8 @@
 <template>
-  <a class="btn-default waves-effect waves-light btn"
-    ><i class="material-icons right">{{ icon }}</i
-    >{{ text }}</a
-  >
+  <button class="btn-default waves-effect waves-light btn">
+    <i class="material-icons left">{{ icon }}</i>
+    {{ text }}
+  </button>
 </template>
 <script>
 export default {
@@ -17,15 +17,21 @@ export default {
 <style>
 .btn-default {
   margin: 5px !important;
-  background-color: #2196f3 !important;
+  background-color: #007ccf !important;
   border: none !important;
   border-radius: 4px !important;
-  display: inline-block !important;
-  height: 36px !important;
-  line-height: 36px !important;
   padding: 0 16px !important;
   text-transform: uppercase !important;
   vertical-align: middle !important;
   -webkit-tap-highlight-color: transparent !important;
+  letter-spacing: 1px;
+  border-radius: 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  transition: 0.5s;
+  color: rgba(255, 255, 255, 0.907) !important;
+  font-weight: bold;
+  display: flex !important;
 }
+
 </style>
