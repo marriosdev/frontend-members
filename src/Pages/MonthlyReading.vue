@@ -1,4 +1,5 @@
 <template>
+  <ModalReadingsList :data="specificList" />
   <div class="container">
     <h5>Leituras Mensais</h5>
     <hr />
@@ -10,19 +11,21 @@
       />
     </div>
     <ul class="collapsible">
-      <li v-for="item in monthlyReadingList" :key="item.group_code" @click="getSpecificList(item.group_code)">
+      <li
+        v-for="item in monthlyReadingList"
+        :key="item.group_code"
+      >
         <div class="collapsible-header">
           <i class="material-icons"></i>
-          {{item.reference_date.substring(0, 7).replace("-", "/")}}
+          {{ item.reference_date.substring(0, 7).replace("-", "/") }}
         </div>
         <div class="collapsible-body">
-          <span v-for="reading in specificList" :key="reading.id">
-            {{ reading.memberId }}
-            {{ reading.name }}
-            {{ reading.lastName }}
-            {{ reading.registration_number }}
-            <br>
-          </span>
+          <ButtonModal
+            @click="getSpecificList(item.group_code)"            
+            :modalId="'modalReadingsList'"
+            :text="'Abrir lista'"
+            :icon="'add'"
+          />
         </div>
       </li>
     </ul>
@@ -30,32 +33,36 @@
 </template>
 
 <script>
+
 import Button from "../Components/Button.vue";
 import api from "../api.js";
 import { createToast } from "mosha-vue-toastify";
+import ModalReadingsList from "../Components/ModalReadingsList.vue";
+import ButtonModal from '../Components/ButtonModal.vue';
 
 export default {
   name: "MonthlyReading",
   components: {
     Button,
+    ModalReadingsList,
+    ButtonModal,
   },
   data() {
     return {
       monthlyReadingList: [],
-      specificList: []
+      specificList: [],
     };
   },
   updated() {
     M.AutoInit();
-  },  
+  },
   methods: {
-    async getSpecificList(code_group)
-    {
+
+    async getSpecificList(code_group) {
       api
         .get(`/monthlyreading/${code_group}/list`)
         .then((response) => {
-          this.specificList = response.data;     
-          console.log("sdaljsdkljkj")
+          this.specificList = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -69,8 +76,8 @@ export default {
       api
         .get("/monthlyreading/list")
         .then((response) => {
-          this.monthlyReadingList = response.data;     
-          console.log(this.monthlyReadingList)      
+          this.monthlyReadingList = response.data;
+          console.log(this.monthlyReadingList);
         })
         .catch((error) => {
           console.log(error);
@@ -115,4 +122,5 @@ export default {
 .box-button {
   text-align: center;
 }
+
 </style>

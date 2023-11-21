@@ -2,17 +2,18 @@
 import Materialize from "materialize-css";
 </script>
 <template>
+  <Header />
   <div id="main-app">
-      <Sidebar />
-      <div class="pages">
-        <RouterView />
-      </div>
+    <Sidebar />
+    <div class="pages">
+      <RouterView />
+    </div>
   </div>
 </template>
 
 <script>
-
 import Sidebar from "./Components/Sidebar.vue";
+import Header from "./Components/Header.vue";
 
 export default {
   name: "App",
@@ -23,6 +24,7 @@ export default {
   },
   components: {
     Sidebar,
+    Header,
   },
   methods: {
     async mounted() {
@@ -33,35 +35,44 @@ export default {
 </script>
 
 <style global>
+/* Root */
+:root {
+  --main-color: #081125;
+  --main-color-button: #3c6fd3;
+}
+
+#box-app {
+  width: 100%;
+}
+
 #main-app {
   display: flex;
   flex-direction: row;
-  background: #ececec;
 }
 .indicator {
   background-color: #005ca7c0 !important;
 }
 
-.tabs .tab a:focus, .tabs .tab a:focus.active {
+.tabs .tab a:focus,
+.tabs .tab a:focus.active {
   background-color: rgba(246, 178, 182, 0) !important;
   outline: none;
 }
 
 * {
-  font-weight: 600;
-}
-.pages{
-  border-radius: 15px;
-  background: white;
-  width: 100%;
-  margin-right: 10px;
-  margin-top: 10px;
-}
-.modal {
-  border-radius: 15px !important; 
 }
 
-*{
+.pages {
+  background: rgb(255, 255, 255);
+  width: 100%;
+  height: 90%;
+}
+
+.modal {
+  border-radius: 15px !important;
+}
+
+* {
   scroll-behavior: smooth;
 }
 
@@ -82,7 +93,7 @@ export default {
 }
 
 *::-webkit-scrollbar {
-  width:5px;
+  width: 5px;
 }
 
 *::-webkit-scrollbar-track {
@@ -91,7 +102,7 @@ export default {
 
 *::-webkit-scrollbar-thumb {
   background-color: rgb(100, 100, 100);
-  border-radius: 20px; 
+  border-radius: 20px;
 }
 
 .bolinha {
@@ -116,5 +127,10 @@ option {
   font-size: 9pt !important;
   color: black !important;
 }
+
+.dropdown-content li {
+  color: black !important;
+}
+
 </style>
 

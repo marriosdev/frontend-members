@@ -1,5 +1,5 @@
 <template>
-  <button class="btn-default waves-effect waves-light btn">
+  <button :class="`btn-default waves-effect waves-light btn ${addClass}`">
     <i class="material-icons left">{{ icon }}</i>
     {{ text }}
   </button>
@@ -9,6 +9,7 @@ export default {
   props: {
     text: String,
     icon: String,
+    addClass: String
   },
   name: "Button",
 };
@@ -17,7 +18,7 @@ export default {
 <style>
 .btn-default {
   margin: 5px !important;
-  background-color: #007ccf !important;
+  background-color: var(--main-color-button) !important;
   border: none !important;
   border-radius: 4px !important;
   padding: 0 16px !important;

@@ -2,16 +2,13 @@
   <div id="sidebar" v-if="showSidebar" class="sidenav-fixed">
     <div>
       <div id="header-sidebar">
-        <div style="display: flex; flex-direction: column;">
-          <span style="font-size: 13pt; display: flex; align-items: center;">
-            <img  style="width: 40px;" src="../assets/img/profile-icon.png" alt="" srcset="">
-            {{ username }}
-          </span>
-          <span style="font-size: 8pt;">
-            {{ profile }}
-          </span>
-        </div>
+        {{ profile }}
+        <i class="material-icons">bug_report</i>
       </div>
+      <hr>
+      <p class="menu-title">
+        Menu
+      </p>
       <ul v-for="buttonSidebar in buttons" :key="buttonSidebar.text">
         <li>
           <ButtonSidebar
@@ -21,9 +18,6 @@
           />
         </li>
       </ul>
-      <span style="float: left; margin-bottom: 15px;">
-        <CirculaIcon @click="logout" :icon="'exit_to_app'"/>
-      </span>
     </div>
     <div id="footer-sidebar">
       <ul>
@@ -38,19 +32,16 @@
 
 <script>
 import ButtonSidebar from "../Components/ButtonSidebar.vue";
-import CirculaIcon from "./CirculaIcon.vue";
 
 export default {
   name: "Sidebar",
   components: {
     ButtonSidebar,
-    CirculaIcon,
   },
   data() {
     return {
-      showSidebar: (!localStorage.getItem("token") ? false : true) ,
-      username: "",
       profile: "",
+      showSidebar: (!localStorage.getItem("token") ? false : true) ,
       buttons: [
         {
           text: "Inicio",
@@ -92,12 +83,10 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (to.path == "/login") {
+      if (to.path == "/login" || localStorage.getItem("token") == null) {
         this.showSidebar = false;
-      } else {
-        this.username = JSON.parse(localStorage.getItem("info")).name;
+      }else{
         this.profile = JSON.parse(localStorage.getItem("info")).profile;
-        this.showSidebar = true;
       }
     },
   },
@@ -122,15 +111,13 @@ export default {
 }
 
 #sidebar {
+  color: rgb(255, 255, 255) !important;
   overflow: auto;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 15px;
   justify-content: space-between;
   position: sticky;
-  min-width: 200px;
-  height: 99vh !important;
-  background-color: #ffffff;
+  width: 300px;
+  height: 100vh !important;
+  background-color: var(--main-color) !important;
   top: 0;
   left: 0;
   z-index: 999;
@@ -139,11 +126,13 @@ export default {
 }
 
 #header-sidebar {
+  margin-top: 30px;
+  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: 40px;
 }
 
 #footer-sidebar {
@@ -153,5 +142,20 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100px;
+}
+
+.menu-title {
+  text-indent: 10px;
+  font-size: 12px;
+  margin: 0 0 0 10px;
+  color: rgba(255, 255, 255, 0.514);
+  text-transform: uppercase;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.171);
+  margin: 10px 10px 10px 10px;
 }
 </style>
