@@ -3,9 +3,7 @@
     <div class="form">
       <div class="container">
         <h4>Cadastrar nova comunidade</h4>
-        
         <hr />
-
         <div class="row">
           <div class="col s6">
             <Input

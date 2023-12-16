@@ -8,7 +8,7 @@
     :show="showModal"
   />
   <div class="container">
-    <h5>Detalhes</h5>
+    <h4>Detalhes</h4>
     <hr />
     <Loader :show="loading" />
     <div class="" v-if="!loading">
@@ -209,7 +209,7 @@ export default {
         .finally(() => {});
     },
     async getMonthlyPayments() {
-      const memberId = this.$route.params.memberId;
+      const memberId = this.member.id;
       api.get(`/member/${memberId}/monthlypayment`).then((response) => {
         this.monthlyPayments = response.data;
       });

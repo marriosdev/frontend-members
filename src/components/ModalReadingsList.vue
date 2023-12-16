@@ -24,7 +24,7 @@
           <div class="2st-box box-info">
             <span>
               <strong> Leitura </strong>
-              <input type="text" @change="updateReadings(reading.original_hydrometer_value, reading.id)" v-model="reading.original_hydrometer_value" />
+              <input type="text" @change="updateReadings(reading.original_hydrometer_value, reading.id, reading.memberId)" v-model="reading.original_hydrometer_value" />
             </span>
             <span>
               <strong> Nº Sistema </strong>
@@ -92,9 +92,8 @@ export default {
         });
         return;
       }
-      
+
       this.loading = true;
-      
       api
         .post("/monthlyreading/update/all", this.readingsUpdate)
         .then((response) => {
@@ -103,24 +102,24 @@ export default {
             showIcon: "true",
           });
           this.readingsUpdate = [];
+          
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
-        }).finally(() => {
-          setTimeout(() => {
-            this.loading = true;
-          }, 300);
+        })
+        .finally(() => {
+            this.loading = false;
         });
     },
 
-    async updateReadings(original_hydrometer_value, id){
+    async updateReadings(original_hydrometer_value, id, memberId){
       if(original_hydrometer_value == null || original_hydrometer_value == ""){
         return;
       }
-      
       this.readingsUpdate.push({
         original_hydrometer_value: original_hydrometer_value,
-        id: id
+        id: id,
+        memberId: memberId
       })
     },
 

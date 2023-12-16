@@ -1,15 +1,13 @@
 <template>
   <ModalReadingsList :data="specificList" />
   <div class="container">
-    <h5>Leituras Mensais</h5>
+    <h4>Leituras Mensais</h4>
     <hr />
-    <div class="container">
       <Button
         @click="generateMonthlyReadingList"
         :text="'Gerar Lista Mensal'"
         :icon="'playlist_add'"
       />
-    </div>
     <ul class="collapsible">
       <li
         v-for="item in monthlyReadingList"

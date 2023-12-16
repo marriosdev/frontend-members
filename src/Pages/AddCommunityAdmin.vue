@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h4>Cadastrar ADMIN</h4>
+    <hr>
     <div class="form">
       <div class="container">
         <div class="row">

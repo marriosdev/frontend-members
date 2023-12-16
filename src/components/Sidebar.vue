@@ -9,10 +9,10 @@
       <p class="menu-title">
         Menu
       </p>
-      <ul v-for="buttonSidebar in buttons" :key="buttonSidebar.text">
+      <ul v-for="buttonSidebar in buttons" :key="buttonSidebar.name">
         <li>
           <ButtonSidebar
-          :text="buttonSidebar.text"
+          :text="buttonSidebar.name"
           :icon="buttonSidebar.icon"
           :link="buttonSidebar.link"
           />
@@ -22,8 +22,6 @@
     <div id="footer-sidebar">
       <ul>
         <p>
-          <!-- Desenvolvido por -->
-          <!-- <a href="https://edmariooliveira.vercel.app/" target="_blank">Edmario Oliveira</a> -->
         </p>
       </ul>
     </div>
@@ -32,6 +30,8 @@
 
 <script>
 import ButtonSidebar from "../Components/ButtonSidebar.vue";
+import api from '../api.js'
+import { createToast } from "mosha-vue-toastify";
 
 export default {
   name: "Sidebar",
@@ -42,38 +42,25 @@ export default {
     return {
       profile: "",
       showSidebar: (!localStorage.getItem("token") ? false : true) ,
-      buttons: [
-        {
-          text: "Inicio",
-          icon: "home",
-          link: "/home",
-        },
-
-        {
-          text: "Membros",
-          icon: "group_add",
-          link: "/membros",
-        },
-        {
-          // icon: "av_timer",
-          icon: "opacity",
-          text: "Leituras",
-          link: "/leituraMensal",
-        },
-        {
-          text: "Comunidade",
-          icon: "people",
-          link: "/adicionarComunidade",
-        },
-        {
-          text: "ADMIN",
-          icon: "settings",
-          link: "/adicionarAdminComunidade",
-        },
-      ],
+      buttons: [],
     };
   },
   methods: {
+    async getMenus()
+    {
+      api
+        .get("/user/menu")
+        .then((response) => {
+          this.buttons = response.data
+          console.log(response)
+        })
+        .catch((error) => {
+          createToast(`Ocorreu um erro ao atualizar o menu`, {
+            type: "danger",
+            showIcon: "true",
+          });
+        });
+    },
     async logout() {
       localStorage.clear();
       this.$router.push("/login");
@@ -90,8 +77,9 @@ export default {
       }
     },
   },
-  updated() {
-  },
+  created() {
+    this.getMenus()
+  }
 };
 </script>
 
