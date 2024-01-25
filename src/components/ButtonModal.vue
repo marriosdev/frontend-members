@@ -1,12 +1,11 @@
 <template>
-  <button :class="classCss + 'light-blue accent-2 btn-modal waves-effect waves-light btn modal-trigger'" :href="'#' + modalId" >
+  <button :class="classCss + ' accent-2 btn-modal waves-effect waves-light btn modal-trigger'" :href="'#' + modalId" >
     <i class="material-icons tinny left">{{ icon }}</i
     >
    {{ text }}
   </button
   >
 </template>
-
 <script>
 export default {
   name: "ButtonModal",

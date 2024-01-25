@@ -2,10 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from '../Pages/Home.vue'
 import Members from '../Pages/Members.vue'
-import AddCommunity from '../Pages/AddCommunity.vue'
-import AddCommunityAdmin from '../Pages/AddCommunityAdmin.vue'
 import Login from '../Pages/Login.vue'
 import Member from '../Pages/Member.vue'
+import Communities from '../Pages/Communities.vue'
+import CommunityAdmins from '../Pages/CommunityAdmins.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,17 +59,17 @@ const router = createRouter({
       }
     },
     {
-      path: '/adicionarComunidade',
-      name: 'adicionarComunidade',
-      component: AddCommunity,
+      path: '/communities',
+      name: 'communities',
+      component: Communities,
       meta: {
         auth: true
       }
     },
     {
-      path: '/adicionarAdminComunidade',
-      name: 'adicionarAdminComunidade',
-      component: AddCommunityAdmin,
+      path: '/communityAdmins',
+      name: 'communityAdmins',
+      component: CommunityAdmins,
       meta: {
         auth: true
       }

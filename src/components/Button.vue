@@ -1,5 +1,5 @@
 <template>
-  <button :class="`btn-default waves-effect waves-light btn ${addClass}`">
+  <button :class="` btn-default waves-effect waves-light btn ${addClass}`">
     <i class="material-icons left">{{ icon }}</i>
     {{ text }}
   </button>

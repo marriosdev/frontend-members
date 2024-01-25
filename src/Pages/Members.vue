@@ -1,6 +1,6 @@
 <template>
-  <AddMemberModal :show="showModal" />
   <div class="container">
+    <AddMemberModal :show="showModal" />
     <h4>Membros</h4>
     <hr />
     <ButtonModal

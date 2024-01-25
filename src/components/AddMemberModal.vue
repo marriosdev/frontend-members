@@ -216,7 +216,15 @@ export default {
           this.errors = [];
         })
         .catch((error) => {
-          this.errors = error.response.data.errors;
+          let errors = error.response.data.errors;
+          errors = Object.values(errors);
+          errors.forEach(element => {
+            createToast(element[0], {
+              type: "danger",
+              showIcon: "true",
+              timeout: 3000.
+            })
+          });
         });
     },
   },

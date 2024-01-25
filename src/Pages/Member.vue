@@ -1,13 +1,13 @@
 <template>
-  <InfoMonthlyPaymentModal
-    @updateMonthlyPayments="getMonthlyPayments()"
-    :uuid="monthlyPaymentIdModal"
-  />
-  <AddMonthlyPayment
-    @updateMonthlyPayments="getMonthlyPayments()"
-    :show="showModal"
-  />
   <div class="container">
+    <InfoMonthlyPaymentModal
+      @updateMonthlyPayments="getMonthlyPayments()"
+      :uuid="monthlyPaymentIdModal"
+    />
+    <AddMonthlyPayment
+      @updateMonthlyPayments="getMonthlyPayments()"
+      :show="showModal"
+    />
     <h4>Detalhes</h4>
     <hr />
     <Loader :show="loading" />

@@ -2,11 +2,13 @@
 import Materialize from "materialize-css";
 </script>
 <template>
-  <Header />
   <div id="main-app">
     <Sidebar />
-    <div class="pages">
-      <RouterView />
+    <div style="display: flex; flex-direction: column; width: 100%;">
+      <Header />
+      <div class="pages">
+        <RouterView />
+      </div>
     </div>
   </div>
 </template>

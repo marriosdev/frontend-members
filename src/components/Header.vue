@@ -9,7 +9,7 @@
     </a>
     
     <div class="nav-wrapper z-depth-3">
-      <a class="brand-logo left" style="margin-left: 10px;"> 
+      <!-- <a class="brand-logo left" style="margin-left: 10px;"> 
         <a class="inputBox_container">
           <svg
             class="search_icon"
@@ -28,7 +28,7 @@
             placeholder="Buscar membro"
           />
         </a>
-      </a>
+      </a> -->
       <ul class="right" style="padding-right: 20px !important">
         <li
           class="dropdown-trigger"
@@ -104,13 +104,15 @@ export default {
 <style scoped>
 #dropMenu {
   top: -70px;
+  width: 170px !important;
 }
-
+#dropMenu a{
+  color: black !important;
+}
 nav {
-  background-color: var(--main-color) !important;
-  color: #e4e4e4;
+  background-color: #d6d6d660;
+  color: #3f3e3e;
   height: 70px;
-  z-index: 999999;
   box-sizing: border-box;
 }
 .inputBox_container {
