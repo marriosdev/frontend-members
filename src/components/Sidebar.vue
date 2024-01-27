@@ -105,7 +105,7 @@ export default {
   position: sticky;
   width: 300px;
   height: 100vh !important;
-  background-color: var(--main-color) !important;
+  background-color: var(--primary) !important;
   top: 0;
   left: 0;
   z-index: 999;
