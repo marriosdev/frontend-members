@@ -6,6 +6,7 @@ import Login from '../Pages/Login.vue'
 import Member from '../Pages/Member.vue'
 import Communities from '../Pages/Communities.vue'
 import CommunityAdmins from '../Pages/CommunityAdmins.vue'
+import PainelAdm from '../Pages/PainelAdm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -81,11 +82,18 @@ const router = createRouter({
       meta: {
         auth: true
       }
+    },
+    {
+      path: '/painelAdm',
+      name: 'painelAdm',
+      component: PainelAdm,
+      meta: {
+        auth: true
+      }
     }
   ]
 })
 
-export default router
 import api from '../api'
 import { createToast } from 'mosha-vue-toastify'
 
@@ -109,3 +117,5 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
+export default router

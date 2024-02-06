@@ -53,6 +53,14 @@
         </tr>
       </tbody>
     </table>
+    <!-- {{ pagination.links }} -->
+    <ul
+      class="pagination"
+      :v-for="link in pagination.links"
+      :key="link"
+    >
+      <li :class="link ? 'active' : ''"><a href=""></a>{{ link }}</li>
+    </ul>
   </div>
 </template>
 
@@ -66,14 +74,57 @@ export default {
   components: {
     ButtonModal,
     AddCommunityModal,
+    Loader,
   },
   data() {
     return {
+      pagination: {
+        links: [
+          {
+            url: "",
+            active: false,
+            label: "",
+          },
+          {
+            url: "",
+            active: false,
+            label: "",
+          },
+        ],
+        page: 0,
+        rowsPerPage: 0,
+        rowsNumber: 0,
+      },
       loading: false,
       communities: Array,
       loading: false,
       showModal: false,
     };
+  },
+  created() {
+    this.getCommunities();
+  },
+  updated() {
+    M.AutoInit();
+  },
+  methods: {
+    async getCommunities() {
+      this.loading = true;
+      this.api
+        .get("communities?paginate=yes")
+        .then((response) => {
+          this.communities = response.data.data;
+          this.pagination.links = response.data.links;
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.loading = false;
+          createToast(`Ocorreu um erro ao carregar as comunidades`, {
+            type: "danger",
+            showIcon: "true",
+          });
+        });
+    },
   },
 };
 </script>

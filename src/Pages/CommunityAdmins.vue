@@ -28,7 +28,9 @@ export default {
       showModal: false,
     };
   },
-  updated() {},
+  created() {
+    M.AutoInit();
+  },
   mounted() {
     this.getCommunities();
   },
