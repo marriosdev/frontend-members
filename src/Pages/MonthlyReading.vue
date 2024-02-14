@@ -63,7 +63,6 @@ export default {
           this.specificList = response.data;
         })
         .catch((error) => {
-          console.log(error);
           createToast(error.response.data.message, {
             type: "danger",
             showIcon: "true",
@@ -75,10 +74,8 @@ export default {
         .get("/monthlyreading/list")
         .then((response) => {
           this.monthlyReadingList = response.data;
-          console.log(this.monthlyReadingList);
         })
         .catch((error) => {
-          console.log(error);
           createToast(error.response.data.message, {
             type: "danger",
             showIcon: "true",
@@ -102,7 +99,6 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error);
           createToast(error.response.data.message, {
             type: "danger",
             showIcon: "true",
@@ -120,5 +116,4 @@ export default {
 .box-button {
   text-align: center;
 }
-
 </style>

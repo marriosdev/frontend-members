@@ -7,6 +7,7 @@ import Member from '../Pages/Member.vue'
 import Communities from '../Pages/Communities.vue'
 import CommunityAdmins from '../Pages/CommunityAdmins.vue'
 import PainelAdm from '../Pages/PainelAdm.vue'
+import CommunityConfig from '../Pages/CommunityConfig.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -87,6 +88,14 @@ const router = createRouter({
       path: '/painelAdm',
       name: 'painelAdm',
       component: PainelAdm,
+      meta: {
+        auth: true
+      }
+    },
+    {
+      path: '/community-config',
+      name: 'community-config',
+      component: CommunityConfig,
       meta: {
         auth: true
       }

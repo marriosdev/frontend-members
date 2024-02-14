@@ -211,7 +211,7 @@ export default {
     async getMonthlyPayments() {
       const memberId = this.member.id;
       api.get(`/member/${memberId}/monthlypayment`).then((response) => {
-        this.monthlyPayments = response.data;
+        this.monthlyPayments = response.data.data;
       });
     },
     async updateValueMonthlyPayment(element, monthlyPaymentId) {},

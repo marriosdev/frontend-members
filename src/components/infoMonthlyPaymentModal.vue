@@ -11,6 +11,8 @@
               Nº: <strong>{{ id }}</strong>
               <br>
               Leitura: <strong>{{ reading }}</strong>
+              <br>
+              Consumo: <strong>{{ consumption }}</strong>
             </div>
             <div v-if="payment_status_id && payment_status_id == 1">
               <div class="status-payment orange accent-1">
@@ -176,6 +178,7 @@ export default {
   },
   data() {
     return {
+      consumption: "",
       reading: "",
       payment_status_name: "",
       classModal: "modal modal-fixed-footer",
@@ -268,6 +271,7 @@ export default {
           this.id = response.data.id;
           this.payment_status_name = response.data.payment_status.name;
           this.reading = response.data.reading.original_hydrometer_value;
+          this.consumption = response.data.reading.consumption;
         })
         .catch((error) => {
           createToast(`Ocorreu um erro ao consultar a fatura!`, {
