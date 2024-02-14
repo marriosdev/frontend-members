@@ -12,5 +12,6 @@
 <script>
 export default {
   name: "CommunityConfig",
+
 };
 </script>
