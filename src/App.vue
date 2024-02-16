@@ -4,7 +4,7 @@ import Materialize from "materialize-css";
 <template>
   <div id="main-app">
     <Sidebar />
-    <div style="display: flex; flex-direction: column; width: 100%;">
+    <div style="display: flex; flex-direction: column; width: 100%">
       <Header />
       <div class="pages">
         <RouterView />
@@ -134,5 +134,15 @@ option {
   color: black !important;
 }
 
+label {
+  font-size: 1.2rem;
+  color: grey !important;
+}
+input:focus {
+  border-bottom: var(--primary) 1px solid !important;
+}
+.tab a {
+  color: var(--main-color) !important;
+}
 </style>
 
