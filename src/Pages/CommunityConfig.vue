@@ -20,7 +20,7 @@
             <div class="row">
               <div class="col s12">
                 <div class="row">
-                    <Button @click="verCredentials()" :text="'Ver Credenciais'" :icon="'visibility'"/>
+                    <Button @click="verCredentials()" :text="''" :icon="(credentials_visibility == 'password') ? 'visibility' : 'visibility_off'"/>
                   <div class="input-field col s6">
                     <input v-model="paymentCredentials.access_token" id="access_token" :type="credentials_visibility" />
                     <label for="access_token">ACCESS_TOKEN</label>

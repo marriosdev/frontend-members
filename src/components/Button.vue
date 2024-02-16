@@ -1,7 +1,10 @@
 <template>
   <button :class="` btn-default waves-effect waves-light btn ${addClass}`">
-    <i class="material-icons left">{{ icon }}</i>
-    {{ text }}
+    <i class="material-icons" v-if="text == ''">{{ icon }}</i>
+    <span v-if="text != ''">
+      <i class="material-icons left">{{ icon }}</i>
+      {{ text }}
+    </span>
   </button>
 </template>
 <script>
