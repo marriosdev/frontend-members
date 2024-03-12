@@ -107,7 +107,6 @@
               <Input
                 :id="'link_pagamento'"
                 :type="'text'"
-                v-model="payment_link"
                 :value="payment_link"
                 :label="'Link de pagamento'"
               />
@@ -127,7 +126,6 @@
               <Input
                 :id="'codigo_pagamento'"
                 :type="'text'"
-                v-model="payment_code"
                 :value="payment_code"
                 :label="'Código do pagamento'"
               />
@@ -253,6 +251,9 @@ export default {
     },
 
     async getInfos(uuid) {
+      this.reading = "";
+        this.consumption = "";
+
       this.loading = true;
       api
         .get(`monthlypayment/${uuid}`)
@@ -272,12 +273,13 @@ export default {
           this.payment_status_name = response.data.payment_status.name;
           this.reading = response.data.reading.original_hydrometer_value;
           this.consumption = response.data.reading.consumption;
+          
+          if(response.data.reading == null) {
+            
+          }
         })
         .catch((error) => {
-          createToast(`Ocorreu um erro ao consultar a fatura!`, {
-            type: "danger",
-            showIcon: "true",
-          });
+          
         })
         .finally(() => {
           this.loading = false;
