@@ -160,7 +160,7 @@
 import Input from "@/components/Input.vue";
 import api from "../api.js";
 import { createToast } from "mosha-vue-toastify";
-import Loader from "@/Loader.vue";
+import Loader from "@/Components/Loader.vue";
 import M, { AutoInit } from "materialize-css";
 
 export default {
