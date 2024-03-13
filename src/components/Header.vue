@@ -60,8 +60,8 @@
 </template>
 
 <script>
-import ButtonSidebar from "./ButtonSidebar.vue";
-import CircularIcon from "./CircularIcon.vue";
+import ButtonSidebar from "@/ButtonSidebar.vue";
+import CircularIcon from "@/CircularIcon.vue";
 
 export default {
   name: "Header",
