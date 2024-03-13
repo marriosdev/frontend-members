@@ -7,7 +7,7 @@ import 'materialize-css/dist/css/materialize.css'
 import 'material-design-icons/iconfont/material-icons.css'
 import 'materialize-css/dist/js/materialize.js'
 import 'mosha-vue-toastify/dist/style.css'
-import './Assets/css/global.css'
+import '@/assets/css/global.css'
 const app = createApp(App)
 
 app.use(router)
