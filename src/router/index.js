@@ -107,6 +107,11 @@ import api from '../api'
 import { createToast } from 'mosha-vue-toastify'
 
 router.beforeEach((to, from, next) => {
+  
+  if(to.name == undefined) {
+    next({ path: '/home' })
+  }
+
   if (to.matched.some((record) => record.meta.auth)) {
     api.get("logged").then((response) => {
       next()
