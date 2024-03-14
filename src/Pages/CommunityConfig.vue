@@ -56,7 +56,7 @@
 </template>
 <script>
 
-import Button from '../Components/Button.vue';
+import Button from '@/Components/Button.vue';
 import api from '../api';
 
 export default {

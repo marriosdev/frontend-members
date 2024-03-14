@@ -85,12 +85,12 @@
 </template>
 
 <script>
-import Input from "@/components/Input.vue";
+import Input from "@/Components/Input.vue";
 import { jsPDF } from "jspdf";
-import Button from "@/Button.vue";
+import Button from "@/Components/Button.vue";
 import api from "../api.js";
 import { createToast } from "mosha-vue-toastify";
-import Loader from "@/Loader.vue";
+import Loader from "@/Components/Loader.vue";
 
 export default {
   name: "ModalReadingsList",
