@@ -53,7 +53,7 @@ export default {
         .then((response) => {
           localStorage.setItem("token", response.data.jwt.access_token);
           localStorage.setItem("info", JSON.stringify(response.data.user));
-          window.location.reload();
+          window.location.href = '/'
         })
         .catch((error) => {
           createToast(`${error.response.data.message}`, {
